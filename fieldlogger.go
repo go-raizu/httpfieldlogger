@@ -62,7 +62,7 @@ func (e *Entry) WithField(k string, v any) Event {
 func (e *Entry) Write(p harwp.ResponseWriterProxier, elapsed time.Duration) {
 	e.Logger.WithValues(
 		"status", p.StatusCode(),
-		"length", humanize.IBytes(uint64(p.BytesWritten())),
+		"length", stripSpace(humanize.IBytes(uint64(p.BytesWritten()))),
 		"elapsed", elapsed,
 	).Info("")
 }
