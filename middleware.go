@@ -22,7 +22,7 @@ import (
 	"github.com/go-raizu/harwp"
 )
 
-var logEntryCtxKey ctxvalues.Key[Event]
+var logEntryCtxKey = ctxvalues.New[Event]()
 
 type Event interface {
 	WithField(k string, v any) Event
@@ -31,7 +31,7 @@ type Event interface {
 
 // GetEvent returns the in-context Event for a request.
 func GetEvent(r *http.Request) Event {
-	return logEntryCtxKey.GetOrDefault(r.Context(), nil)
+	return logEntryCtxKey.GetOrZero(r.Context())
 }
 
 // WithEvent sets the in-context Event for a request.
